@@ -131,9 +131,9 @@ string(float Team) GetTeamColor =
 
 string(float Team) GetCTFTeam =
 {
-	if (Team == TEAM1) return "���";
-	else if (Team == TEAM2) return "����";
-	else if (Team == TEAM3) return "����";
+	if (Team == TEAM1) return "red";
+	else if (Team == TEAM2) return "blue";
+	else if (Team == TEAM3) return "grey";
 	return "UNKNOWN";
 
 };
@@ -917,9 +917,9 @@ void(entity flg) TeamReturnFlag =
 		else {
 			if (teamplay == TEAM_CTF_ALT) {
 				if (flg.team == TEAM1)
-					centerprint(p, "��� flag has been returned to base!\n");
+					centerprint(p, "red flag has been returned to base!\n");
 				else if (flg.team == TEAM2)
-					centerprint(p, "���� flag has been returned to base!\n");
+					centerprint(p, "blue flag has been returned to base!\n");
 				else
 					centerprint(p, "$qc_some_flag_returned_base");
 			} else {
@@ -961,12 +961,12 @@ void(entity flg) TeamDropFlag =
 
 	bprint(p.netname);
 	if (teamplay == TEAM_CTF_ONEFLAG)
-		bprint(" ���� the flag!\n");
+		bprint(" LOST the flag!\n");
 	else {
 		if (flg.team == TEAM1)
-			bprint(" ���� the ��� flag!\n"); // red
+			bprint(" LOST the red flag!\n"); // red
 		else
-			bprint(" ���� the ���� flag!\n"); // blue
+			bprint(" LOST the blue flag!\n"); // blue
 	}
 
 	setorigin(flg, p.origin - '0 0 24');
@@ -1027,11 +1027,11 @@ void() TeamFlagTouch =
 		// in one flag mode, we always pick up the flag.  The touch of the
 		// flagbase entities does the scoring
 		bprint(other.netname);
-		bprint(" ��� the flag!\n");
+		bprint(" GOT the flag!\n");
 		if (CTF_FLAG_BONUS)
 			other.frags = other.frags + CTF_FLAG_BONUS;
 		//centerprint(other, "$qc_got_flag_enemy_base");
-		  centerprint(other, "��� ��� ��� ����\n\n���� �� �� ����� ����\n");
+		  centerprint(other, "you got the flag\n\ntake it to enemy base");
 
 		sound (other, CHAN_ITEM, self.noise, 1, ATTN_NORM);
 
@@ -1068,9 +1068,9 @@ void() TeamFlagTouch =
 				(self.team == TEAM2 && (other.ctf_flags & CTF_FLAG_TEAM1))) {
 				bprint(other.netname);
 				if (other.team == TEAM1)
-					bprint(" �������� the ���� flag!\n"); // blue
+					bprint(" CAPTURED the blue flag!\n"); // blue
 				else
-					bprint(" �������� the ��� flag!\n"); // red
+					bprint(" CAPTURED the red flag!\n"); // red
 				other.items = other.items - (other.items & (IT_KEY1 | IT_KEY2));
 
 				sound (other, CHAN_VOICE, "misc/flagcap.wav", 1, ATTN_NONE);
@@ -1087,9 +1087,9 @@ void() TeamFlagTouch =
 					if (self.team != other.team) {
 						if (self.team == TEAM3)
 							if (other.team == TEAM1)
-								centerprint(self, "���� flag was captured!\n");
+								centerprint(self, "blue flag was captured!\n");
 							else
-								centerprint(self, "��� flag was captured!\n");
+								centerprint(self, "red flag was captured!\n");
 						else 
 							centerprint(self, "$qc_your_flag_captured");
 						// reset the last_hurt_carrier variable in all enemy players, so that you don't get
@@ -1103,9 +1103,9 @@ void() TeamFlagTouch =
 						if (self.ctf_lastreturnedflag + CTF_RETURN_FLAG_ASSIST_TIMEOUT > time) {
 							bprint(self.netname);
 							if (self.team == TEAM1)
-								bprint(" gets an assist for returning the ��� flag!\n");
+								bprint(" gets an assist for returning the red flag!\n");
 							else
-								bprint(" gets an assist for returning the ���� flag!\n");
+								bprint(" gets an assist for returning the blue flag!\n");
 							self.frags = self.frags + CTF_RETURN_FLAG_ASSIST_BONUS;
 						}
 						if (self.ctf_lastfraggedcarrier + CTF_FRAG_CARRIER_ASSIST_TIMEOUT > time) {
@@ -1127,9 +1127,9 @@ void() TeamFlagTouch =
 		// hey, its not home.  return it by teleporting it back
 		bprint(other.netname);
 		if (other.team == TEAM1)
-			bprint(" �������� the ��� flag!\n"); // red
+			bprint(" RETURNED the red flag!\n"); // red
 		else
-			bprint(" �������� the ���� flag!\n"); // blue
+			bprint(" RETURNED the blue flag!\n"); // blue
 		other.frags = other.frags + CTF_RECOVERY_BONUS;
 		other.ctf_lastreturnedflag = time;
 		sound (other, CHAN_ITEM, self.noise1, 1, ATTN_NORM);
@@ -1144,18 +1144,18 @@ void() TeamFlagTouch =
 	// hey, its not our flag, pick it up
 	bprint(other.netname);
 	if (self.team == TEAM1)
-		bprint(" ��� the ��� flag!\n"); // red
+		bprint(" GOT the red flag!\n"); // red
 	else
-		bprint(" ��� the ���� flag!\n"); // blue
+		bprint(" GOT the blue flag!\n"); // blue
 	other.frags = other.frags + CTF_FLAG_BONUS;
 
 	// if in three team, messages are a little different
 	if (other.team == TEAM3) {
 //		centerprint(other, "$qc_got_flag_other");
-		centerprint(other, "��� ��� ��� ����� ����\n\n������ �� �� ��� ����� ����\n");
+		centerprint(other, "you got the enemy flag\n\nreturn it to the other base\n");
 	} else {
 //		centerprint(other, "$qc_got_flag_return_base");
-		centerprint(other, "��� ��� ��� ����� ����\n\n������ �� ����\n");
+		centerprint(other, "you got the enemy flag\n\nreturn to base\n");
 	}
 	sound (other, CHAN_ITEM, self.noise, 1, ATTN_NORM);
 
@@ -1186,22 +1186,22 @@ void() TeamFlagTouch =
 			else if (p.steam == other.team)
 			{
 				if (self.team == TEAM1)
-					centerprint(p, "Your team has the ��� flag!\n");	// Red Flag
+					centerprint(p, "Your team has the red flag!\n");	// Red Flag
 				else
-					centerprint(p, "Your team has the ���� flag!\n");	// Blue Flag
+					centerprint(p, "Your team has the blue flag!\n");	// Blue Flag
 			}
 			else
 			{
 				if (self.team == TEAM1)
 					if (other.steam == TEAM2)
-						centerprint(p, "���� team has the ��� flag!\n"); // Blue has red
+						centerprint(p, "blue team has the red flag!\n"); // Blue has red
 					else // must be team3
-						centerprint(p, "���� team has the ��� flag!\n"); // grey has red
+						centerprint(p, "grey team has the red flag!\n"); // grey has red
 				else
 					if (other.steam == TEAM1)
-						centerprint(p, "��� team has the ���� flag!\n"); // red has blue
+						centerprint(p, "red team has the blue flag!\n"); // red has blue
 					else // must be team3
-						centerprint(p, "���� team has the ���� flag!\n");// grey has blue
+						centerprint(p, "grey team has the blue flag!\n");// grey has blue
 			}
 		}
 		p = find(p, classname, "player");
@@ -1231,7 +1231,7 @@ void() TeamFlagBaseTouch =
 			(other.ctf_flags & CTF_FLAG_FLAG)) {
 			// he just touched enemy base, capture it
 			bprint(other.netname);
-			bprint(" �������� the flag!\n"); // blue
+			bprint(" CAPTURED the flag!\n"); // blue
 			other.items = other.items - (other.items & (IT_KEY1 | IT_KEY2));
 			sound (other, CHAN_VOICE, "misc/flagcap.wav", 1, ATTN_NONE);
 
@@ -1273,9 +1273,9 @@ void() TeamFlagBaseTouch =
 
 		bprint(other.netname);
 		if (self.team == TEAM1)
-			bprint(" �������� the ���� flag!\n"); // blue
+			bprint(" CAPTURED the blue flag!\n"); // blue
 		else
-			bprint(" �������� the ��� flag!\n"); // red
+			bprint(" CAPTURED the red flag!\n"); // red
 		other.items = other.items - (other.items & (IT_KEY1 | IT_KEY2));
 
 		sound (other, CHAN_VOICE, "misc/flagcap.wav", 1, ATTN_NONE);
@@ -1485,19 +1485,19 @@ void() TeamFlagStatusReport =
 
 		if (flag1 != world && flag1.cnt == FLAG_CARRIED) {
 			if (flag1.owner == self)
-				sprint(self, "You have the ��� flag!\n");
+				sprint(self, "You have the red flag!\n");
 			else {
 				sprint(self, flag1.owner.netname);
 				n = GetCTFTeam(flag1.owner.steam);
 				sprint(self, " of the ");
 				sprint(self, n);
-				sprint(self, " team has the ��� flag.\n");
+				sprint(self, " team has the red flag.\n");
 			}
 		} else {
 			if (self.steam == flag1.team)
 				sprint(self, "Your flag is ");
 			else
-				sprint(self, "��� flag is ");
+				sprint(self, "red flag is ");
 			if (flag1 == world)
 				sprint(self, "missing!\n");
 			if (flag1.cnt == FLAG_AT_BASE)
@@ -1510,19 +1510,19 @@ void() TeamFlagStatusReport =
 
 		if (flag2 != world && flag2.cnt == FLAG_CARRIED) {
 			if (flag2.owner == self) 
-				sprint(self, "You have the ���� flag.\n");
+				sprint(self, "You have the blue flag.\n");
 			else {
 				sprint(self, flag2.owner.netname);
 				n = GetCTFTeam(flag2.owner.steam);
 				sprint(self, " of the ");
 				sprint(self, n);
-				sprint(self, " team has the ���� flag.\n");
+				sprint(self, " team has the blue flag.\n");
 			}
 		} else {
 			if (self.steam == flag1.team)
 				sprint(self, "Your flag is ");
 			else
-				sprint(self, "���� flag is ");
+				sprint(self, "blue flag is ");
 			if (flag2 == world)
 				sprint(self, "missing!\n");
 			if (flag2.cnt == FLAG_AT_BASE)
@@ -1883,4 +1883,3 @@ void() func_ctf_wall =
 	} else
 		remove(self);
 };
-

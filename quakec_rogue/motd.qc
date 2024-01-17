@@ -48,21 +48,21 @@ void() MOTD =
 			centerprint(self, "Welcome to\nThe Dissolution of Eternity!\nBy Rogue Entertainment\n\nDeathmatch Tag!\n");
 		else if (teamplay == TEAM_CTF)
 			if (self.steam == TEAM1)
-				centerprint(self, "Welcome to\nThe Dissolution of Eternity!\nBy Rogue Entertainment\n\nCAPTURE THE FLAG!\n\nYou are ��� team!\n");
+				centerprint(self, "Welcome to\nThe Dissolution of Eternity!\nBy Rogue Entertainment\n\nCAPTURE THE FLAG!\n\nYou are red team!\n");
 			else
-				centerprint(self, "Welcome to\nThe Dissolution of Eternity!\nBy Rogue Entertainment\n\nCAPTURE THE FLAG!\n\nYou are ���� team!\n");
+				centerprint(self, "Welcome to\nThe Dissolution of Eternity!\nBy Rogue Entertainment\n\nCAPTURE THE FLAG!\n\nYou are blue team!\n");
 		else if (teamplay == TEAM_CTF_ONEFLAG)
 			if (self.steam == TEAM1)
-				centerprint(self, "Welcome to\nThe Dissolution of Eternity!\nBy Rogue Entertainment\n\nCAPTURE THE FLAG!\n(One Flag Mode)\n\nYou are ��� team!\n");
+				centerprint(self, "Welcome to\nThe Dissolution of Eternity!\nBy Rogue Entertainment\n\nCAPTURE THE FLAG!\n(One Flag Mode)\n\nYou are red team!\n");
 			else
-				centerprint(self, "Welcome to\nThe Dissolution of Eternity!\nBy Rogue Entertainment\n\nCAPTURE THE FLAG!\n(One Flag Mode)\n\nYou are ���� team!\n");
+				centerprint(self, "Welcome to\nThe Dissolution of Eternity!\nBy Rogue Entertainment\n\nCAPTURE THE FLAG!\n(One Flag Mode)\n\nYou are blue team!\n");
 		else if (teamplay == TEAM_CTF_ALT)
 			if (self.steam == TEAM1)
-				centerprint(self, "Welcome to\nThe Dissolution of Eternity!\nBy Rogue Entertainment\n\nCAPTURE THE FLAG!\n(Three Team Mode)\n\nYou are ��� team!\n");
+				centerprint(self, "Welcome to\nThe Dissolution of Eternity!\nBy Rogue Entertainment\n\nCAPTURE THE FLAG!\n(Three Team Mode)\n\nYou are red team!\n");
 			else if (self.steam == TEAM2)
-				centerprint(self, "Welcome to\nThe Dissolution of Eternity!\nBy Rogue Entertainment\n\nCAPTURE THE FLAG!\n(Three Team Mode)\n\nYou are ���� team!\n");
+				centerprint(self, "Welcome to\nThe Dissolution of Eternity!\nBy Rogue Entertainment\n\nCAPTURE THE FLAG!\n(Three Team Mode)\n\nYou are blue team!\n");
 			else
-				centerprint(self, "Welcome to\nThe Dissolution of Eternity!\nBy Rogue Entertainment\n\nCAPTURE THE FLAG!\n(Three Team Mode)\n\nYou are ���� team!\n");
+				centerprint(self, "Welcome to\nThe Dissolution of Eternity!\nBy Rogue Entertainment\n\nCAPTURE THE FLAG!\n(Three Team Mode)\n\nYou are grey team!\n");
 		return;
 	}
 	self.motd_time = 0;
@@ -86,4 +86,3 @@ void() SetMOTD =
 	else
 		self.motd_count = 0;
 };
-
